@@ -43,11 +43,3 @@ The system employs state-of-the-art vehicle detection and tracking techniques to
     python main.py
     ```
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-We extend our gratitude to the open-source community for providing valuable tools and resources. This project was inspired by the need for smarter traffic management solutions in urban areas.
-
