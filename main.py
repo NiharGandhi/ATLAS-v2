@@ -19,6 +19,7 @@ def main():
     detectors = {}
     trackers = {}
     hubs = {}
+    signal_timings = {side: 0 for side in video_sources.keys()}
 
     for side, video_source in video_sources.items():
         detectors[side] = VehicleDetector(
@@ -26,37 +27,47 @@ def main():
         trackers[side] = VehicleTracker()
         hubs[side] = TrafficHub()
 
-    cap_dict = {side: cv2.VideoCapture(video_source)
-                for side, video_source in video_sources.items()}
+    # Create windows for displaying video streams
+    cv2.namedWindow('Adaptive Traffic Lights')
 
     while True:
-        for side, cap in cap_dict.items():
-            ret, frame = cap.read()
+        frames = []
+        for side, detector in detectors.items():
+            ret, frame = cv2.VideoCapture(video_sources[side]).read()
             if not ret:
                 break
-            cv2.imshow(side, frame)
 
             # Detect vehicles on each side of the road...
-            vehicle_data = detectors[side].detect_vehicles()
-            print(f"Detected vehicles on {side} side:", len(
-                vehicle_data['vehicles']))
-
-            # Track vehicles over time...
+            vehicle_data = detector.detect_vehicles()
             tracked_data = trackers[side].update(vehicle_data['vehicles'])
-
-            # Send tracked data to the traffic hub...
             hubs[side].receive_data(side, tracked_data)
 
-        # Control signal timing based on traffic analysis...
-        for side, hub in hubs.items():
-            print(f"Controlling signals for {side} side...")
-            hub.control_signals()
+            # Control signal timing based on traffic analysis...
+            total_vehicles = len(tracked_data)
+            if total_vehicles > 0:
+                # Adjust signal timing based on the number of vehicles
+                # Each vehicle takes 2 seconds, max 30 seconds
+                signal_timings[side] = min(total_vehicles * 2, 30)
 
+            # Display text indicating signal timing
+            cv2.putText(frame, f"Signal Time: {signal_timings[side]} seconds", (
+                10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+            # Resize frame to fit in a grid layout
+            frame = cv2.resize(frame, (300, 300))
+            frames.append(frame)
+
+        # Combine frames into a single image using horizontal concatenation
+        grid_image = cv2.hconcat(frames)
+
+        # Display the combined grid image
+        cv2.imshow('Adaptive Traffic Lights', grid_image)
+
+        # Check for user input to exit
         if cv2.waitKey(1) == ord('q'):
             break
 
-    for cap in cap_dict.values():
-        cap.release()
+    # Release video capture objects and close all OpenCV windows
     cv2.destroyAllWindows()
 
 
