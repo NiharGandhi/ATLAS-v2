@@ -25,6 +25,8 @@ class TrafficHub:
                 signal_duration = 30  # Maximum signal duration is 30 seconds
             else:
                 signal_duration = traffic_density
+            
+            print(f"Signal duration for {side} side: {signal_duration} seconds")
 
             # Update signal status for the side
             self.signal_timings[side] = signal_duration
