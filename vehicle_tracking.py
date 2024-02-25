@@ -72,4 +72,7 @@ class VehicleTracker:
                 for col in unused_cols:
                     self.register(input_centroids[col])
 
+        # Add print statement
+        print(f"Updated tracked data: {self.objects}")
+
         return self.objects

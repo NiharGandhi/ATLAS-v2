@@ -17,6 +17,7 @@ class VehicleDetector:
             return "south"  # Assuming the center of the frame divides the road into two sides
 
     def detect_vehicles(self):
+        print("video source: ", self.video_source)
         cap = cv2.VideoCapture(self.video_source)
         vehicle_data = {}
 
@@ -81,5 +82,7 @@ class VehicleDetector:
 
         cap.release()
         cv2.destroyAllWindows()
+
+        print(f"Detected {len(vehicles)} vehicles on {self.video_source}")
 
         return vehicle_data

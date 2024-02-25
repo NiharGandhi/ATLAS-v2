@@ -8,6 +8,9 @@ class TrafficHub:
     def receive_data(self, side, vehicle_data):
         self.side_data[side] = vehicle_data
 
+        # Add print statement
+        print(f"Received data for {side}: {vehicle_data}")
+
     def analyze_traffic(self):
         total_vehicles = sum(len(vehicles)
                              for vehicles in self.side_data.values())
