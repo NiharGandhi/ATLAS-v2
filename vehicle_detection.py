@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-import csv
-import datetime
 
 class VehicleDetector:
     def __init__(self, weights_file, config_file, class_names_file, video_source):
