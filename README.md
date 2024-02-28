@@ -1,6 +1,6 @@
 # Adaptive Traffic Lights AI System
 
-The Adaptive Traffic Lights AI System is an intelligent traffic management solution that uses computer vision to analyze traffic conditions at a four-way junction and adjust signal timings accordingly.
+The Adaptive Traffic Lights AI System (ATLAS) is an intelligent traffic management solution that uses computer vision to analyze traffic conditions at a four-way junction and adjust signal timings accordingly.
 
 ## Overview
 
@@ -42,12 +42,4 @@ The system employs state-of-the-art vehicle detection and tracking techniques to
     ```bash
     python main.py
     ```
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-We extend our gratitude to the open-source community for providing valuable tools and resources. This project was inspired by the need for smarter traffic management solutions in urban areas.
 
